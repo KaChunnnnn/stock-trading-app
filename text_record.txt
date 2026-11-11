@@ -1,0 +1,151 @@
+Test ID: 1
+Test Scenario: Single‑stock backtest with Golden Cross strategy
+Steps:
+1. Input stock ticker: MSFT
+2. Select trading strategy: Golden Cross
+3. Set Short MA = 50, Long MA = 200, date range: 2021/01/01‑2026/01/01
+4. Click Run Backtest
+
+Expected Result:
+The system renders the chart successfully, showing close price curve, moving average lines, as well as green buy markers and red sell markers.
+
+Actual Result:
+Backtest completed with no error. The page displayed the price graph, 50‑day MA, 200‑day MA, together with trading signal dots.
+
+Pass Status: ✅ PASS
+Remark: Cloud web test
+----------------------------------------------------------------------
+Test ID: 2
+Test Scenario: Multi‑stock portfolio backtesting
+Steps:
+1. Input stock tickers: MSFT,AAPL
+2. Select strategy: Golden Cross
+3. Keep parameters Short MA = 50, Long MA = 200, date range 2021/01/01‑2026/01/01
+4. Click Run Backtest
+
+Expected Result:
+The system completes calculation successfully. The dropdown selector can switch between different stocks to view their respective charts. Portfolio statistics are available.
+
+Actual Result:
+The backtest finished without crash. The drop‑down list shows MSFT and AAPL, we can toggle to check each stock’s price chart, moving averages and trading markers.
+
+Pass Status: ✅ PASS
+Remark: Cloud web test
+----------------------------------------------------------------------
+Test ID: 3
+Test Scenario: Switch to Death Cross and Momentum strategy for backtesting
+Steps:
+1. First test for Death Cross:
+    Input tickers MSFT,AAPL,NVDA, select Death Cross, set Short MA=50, Long MA=200, date range 2021/01/01‑2026/01/01, click Run Backtest
+2. Then test for Momentum:
+    Input tickers MSFT,AAPL, select Momentum, keep the same parameters and date range, click Run Backtest
+
+Expected Result:
+The program can run backtest successfully after switching strategies. Different strategies produce distinct trading signal points on the chart.
+
+Actual Result:
+Both Death Cross and Momentum strategies executed without errors. The charts generated different distributions of green buy markers and red sell markers, consistent with the logic of each strategy.
+
+Pass Status: ✅ PASS
+Remark: Cloud web test
+----------------------------------------------------------------------
+Test ID: 4
+Test Scenario: Input invalid stock ticker
+Steps:
+1. Enter non‑existent ticker: XXXX999
+2. Select trading strategy: Momentum
+3. Set Short MA = 50, Long MA = 200, date range: 2021/01/01‑2026/01/01
+4. Click Run Backtest
+
+Expected Result:
+The program catches the error and displays a friendly error message instead of crashing.
+
+Actual Result:
+Backtest execution failed. The page showed error text: "Failed to execute backtest: No usable Yahoo Finance data was returned for XXXX999." The application did not crash.
+
+Pass Status: ✅ PASS
+Remark: Cloud web test
+----------------------------------------------------------------------
+Test ID: 5
+Test Scenario: Empty ticker input test
+Steps:
+1. Leave the stock ticker input box blank
+2. Select trading strategy: Momentum
+3. Set Short MA = 50, Long MA = 200, date range: 2021/01/01‑2026/01/01
+4. Click Run Backtest
+
+Expected Result:
+The system can handle empty input gracefully and output a reminder message instead of crashing.
+
+Actual Result:
+The dropdown box shows "No options to select". A warning message "No price data available for None." is displayed. The application keeps running normally without breakdown.
+
+Pass Status: ✅ PASS
+Remark: Cloud web test
+----------------------------------------------------------------------
+Test ID: 6-1
+Test Scenario: LLM strategy analysis module local terminal test
+Steps:
+1. Configure GenAI API key in local environment variable
+2. Run the script: python llm_analysis.py
+3. Input backtest result of MSFT and AAPL (Golden Cross strategy)
+4. Wait for LLM to generate analysis commentary
+
+Expected Result:
+The LLM module can connect to the API successfully, parse backtest statistics, and return structured analysis with mandatory disclaimer.
+
+Actual Result:
+The script ran without error. The LLM output returned overall return, per-stock performance, risk summary and trading behaviour analysis. The required investment disclaimer was shown at the bottom.
+
+Pass Status: ✅ PASS
+Remark: Local terminal test
+----------------------------------------------------------------------
+Test ID: 6-2
+Test Scenario: LLM analysis test on Streamlit web page
+Steps:
+1. Launch the Streamlit app locally
+2. Run backtest with MSFT and AAPL using Golden Cross strategy
+3. Navigate to the AI Strategy Analysis section
+4. Trigger LLM analysis button
+
+Expected Result:
+The web page can call the LLM module correctly, display formatted analysis text, and include the disclaimer.
+
+Actual Result:
+The web page loaded the LLM analysis result normally. The content covered return performance, win rate and risk notes, with the standard disclaimer at the end. No page crash occurred.
+
+Pass Status: ✅ PASS
+Remark: Streamlit web frontend test
+----------------------------------------------------------------------
+Test ID: 6-3
+Test Scenario: LLM module test with empty backtest data
+Steps:
+1. Keep the stock ticker input blank
+2. Run backtest (no trading data generated)
+3. Go to the AI analysis page and click to generate report
+
+Expected Result:
+The LLM module catches empty data input, returns a friendly prompt message instead of API error or program crash.
+
+Actual Result:
+The system detected no available backtest data. It showed a reminder that analysis cannot be generated without valid trading records. The app remained stable.
+
+Pass Status: ✅ PASS
+Remark: Edge case test for empty backtest data
+----------------------------------------------------------------------
+Test ID: 6-4
+Test Scenario: LLM analysis after switching trading strategy
+Steps:
+1. Input MSFT and AAPL
+2. Select Momentum strategy and run backtest
+3. Open the AI analysis section and request LLM commentary
+
+Expected Result:
+LLM can read the new backtest metrics under Momentum strategy and generate analysis adapted to this strategy, with mandatory disclaimer.
+
+Actual Result:
+The LLM generated a new set of analysis based on Momentum backtest results. It compared performance metrics and risk features, and the required disclaimer was attached.
+
+Pass Status: ✅ PASS
+Remark: LLM analysis for different strategy output
+----------------------------------------------------------------------
